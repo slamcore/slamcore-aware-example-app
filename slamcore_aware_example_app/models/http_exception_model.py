@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
@@ -11,7 +13,7 @@ T = TypeVar("T", bound="HTTPExceptionModel")
 class HTTPExceptionModel:
     """
     Attributes:
-        detail (Union[None, str]):
+        detail (None | str):
     """
 
     detail: None | str

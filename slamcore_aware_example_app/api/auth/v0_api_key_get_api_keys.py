@@ -21,7 +21,7 @@ def _get_kwargs() -> dict[str, Any]:
 
 def _parse_response(
     *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> HTTPExceptionModel | list["APIKeyPropsGet"] | None:
+) -> HTTPExceptionModel | list[APIKeyPropsGet] | None:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -31,10 +31,12 @@ def _parse_response(
             response_200.append(response_200_item)
 
         return response_200
+
     if response.status_code == 401:
         response_401 = HTTPExceptionModel.from_dict(response.json())
 
         return response_401
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -43,7 +45,7 @@ def _parse_response(
 
 def _build_response(
     *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> Response[HTTPExceptionModel | list["APIKeyPropsGet"]]:
+) -> Response[HTTPExceptionModel | list[APIKeyPropsGet]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -55,7 +57,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-) -> Response[HTTPExceptionModel | list["APIKeyPropsGet"]]:
+) -> Response[HTTPExceptionModel | list[APIKeyPropsGet]]:
     """Get Api Keys
 
      Get a list of registered API keys for the current user.
@@ -68,7 +70,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[HTTPExceptionModel, list['APIKeyPropsGet']]]
+        Response[HTTPExceptionModel | list[APIKeyPropsGet]]
     """
 
     kwargs = _get_kwargs()
@@ -83,7 +85,7 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-) -> HTTPExceptionModel | list["APIKeyPropsGet"] | None:
+) -> HTTPExceptionModel | list[APIKeyPropsGet] | None:
     """Get Api Keys
 
      Get a list of registered API keys for the current user.
@@ -96,7 +98,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[HTTPExceptionModel, list['APIKeyPropsGet']]
+        HTTPExceptionModel | list[APIKeyPropsGet]
     """
 
     return sync_detailed(
@@ -107,7 +109,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-) -> Response[HTTPExceptionModel | list["APIKeyPropsGet"]]:
+) -> Response[HTTPExceptionModel | list[APIKeyPropsGet]]:
     """Get Api Keys
 
      Get a list of registered API keys for the current user.
@@ -120,7 +122,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[HTTPExceptionModel, list['APIKeyPropsGet']]]
+        Response[HTTPExceptionModel | list[APIKeyPropsGet]]
     """
 
     kwargs = _get_kwargs()
@@ -133,7 +135,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-) -> HTTPExceptionModel | list["APIKeyPropsGet"] | None:
+) -> HTTPExceptionModel | list[APIKeyPropsGet] | None:
     """Get Api Keys
 
      Get a list of registered API keys for the current user.
@@ -146,7 +148,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[HTTPExceptionModel, list['APIKeyPropsGet']]
+        HTTPExceptionModel | list[APIKeyPropsGet]
     """
 
     return (

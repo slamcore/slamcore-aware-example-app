@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class RunType(str, Enum):
+    EXTENSION = "extension"
     LOCALISATION = "localisation"
     MAPPING = "mapping"
     PASS_THROUGH = "pass through"

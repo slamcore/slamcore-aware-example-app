@@ -26,10 +26,12 @@ def _parse_response(
         response_200 = Token.from_dict(response.json())
 
         return response_200
+
     if response.status_code == 401:
         response_401 = HTTPExceptionModel.from_dict(response.json())
 
         return response_401
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -63,7 +65,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[HTTPExceptionModel, Token]]
+        Response[HTTPExceptionModel | Token]
     """
 
     kwargs = _get_kwargs()
@@ -91,7 +93,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[HTTPExceptionModel, Token]
+        HTTPExceptionModel | Token
     """
 
     return sync_detailed(
@@ -115,7 +117,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[HTTPExceptionModel, Token]]
+        Response[HTTPExceptionModel | Token]
     """
 
     kwargs = _get_kwargs()
@@ -141,7 +143,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[HTTPExceptionModel, Token]
+        HTTPExceptionModel | Token
     """
 
     return (

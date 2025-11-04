@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime
 from collections.abc import Mapping
 from typing import Any, TypeVar, cast
@@ -14,12 +16,12 @@ class APIKeyPropsGet:
     """
     Attributes:
         last_3_chars (str):
-        expires_at (Union[None, datetime.datetime]):
-        description (Union[None, str]):
+        expires_at (datetime.datetime | None):
+        description (None | str):
     """
 
     last_3_chars: str
-    expires_at: None | datetime.datetime
+    expires_at: datetime.datetime | None
     description: None | str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -52,7 +54,7 @@ class APIKeyPropsGet:
         d = dict(src_dict)
         last_3_chars = d.pop("last_3_chars")
 
-        def _parse_expires_at(data: object) -> None | datetime.datetime:
+        def _parse_expires_at(data: object) -> datetime.datetime | None:
             if data is None:
                 return data
             try:
@@ -61,9 +63,9 @@ class APIKeyPropsGet:
                 expires_at_type_0 = isoparse(data)
 
                 return expires_at_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | datetime.datetime, data)
+            return cast(datetime.datetime | None, data)
 
         expires_at = _parse_expires_at(d.pop("expires_at"))
 

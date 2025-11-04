@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -23,13 +25,17 @@ class DeviceStatus:
         state (DeviceState): Operation state of the Aware device.
         sessions (list[str]): List of available maps on the Slamcore Aware device.
         health (HealthStatus): Device health status.
-        slam_state (Union['SlamSystemStatus', None, Unset]): Current status of the SLAM system.
+        external_storage (bool): External storage is mounted.
+        sloc_active (bool): SLOC sensor is activated.
+        slam_state (None | SlamSystemStatus | Unset): Current status of the SLAM system.
     """
 
     state: DeviceState
     sessions: list[str]
-    health: "HealthStatus"
-    slam_state: Union["SlamSystemStatus", None, Unset] = UNSET
+    health: HealthStatus
+    external_storage: bool
+    sloc_active: bool
+    slam_state: None | SlamSystemStatus | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -41,7 +47,11 @@ class DeviceStatus:
 
         health = self.health.to_dict()
 
-        slam_state: None | Unset | dict[str, Any]
+        external_storage = self.external_storage
+
+        sloc_active = self.sloc_active
+
+        slam_state: dict[str, Any] | None | Unset
         if isinstance(self.slam_state, Unset):
             slam_state = UNSET
         elif isinstance(self.slam_state, SlamSystemStatus):
@@ -56,6 +66,8 @@ class DeviceStatus:
                 "state": state,
                 "sessions": sessions,
                 "health": health,
+                "external_storage": external_storage,
+                "sloc_active": sloc_active,
             }
         )
         if slam_state is not UNSET:
@@ -75,7 +87,11 @@ class DeviceStatus:
 
         health = HealthStatus.from_dict(d.pop("health"))
 
-        def _parse_slam_state(data: object) -> Union["SlamSystemStatus", None, Unset]:
+        external_storage = d.pop("external_storage")
+
+        sloc_active = d.pop("sloc_active")
+
+        def _parse_slam_state(data: object) -> None | SlamSystemStatus | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -86,9 +102,9 @@ class DeviceStatus:
                 slam_state_type_0 = SlamSystemStatus.from_dict(data)
 
                 return slam_state_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["SlamSystemStatus", None, Unset], data)
+            return cast(None | SlamSystemStatus | Unset, data)
 
         slam_state = _parse_slam_state(d.pop("slam_state", UNSET))
 
@@ -96,6 +112,8 @@ class DeviceStatus:
             state=state,
             sessions=sessions,
             health=health,
+            external_storage=external_storage,
+            sloc_active=sloc_active,
             slam_state=slam_state,
         )
 

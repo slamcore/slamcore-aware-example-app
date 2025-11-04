@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import Any, TypeVar, cast
 
@@ -15,18 +17,18 @@ class BodyV0AuthLogin:
     Attributes:
         username (str):
         password (str):
-        grant_type (Union[None, Unset, str]):
-        scope (Union[Unset, str]):  Default: ''.
-        client_id (Union[None, Unset, str]):
-        client_secret (Union[None, Unset, str]):
+        grant_type (None | str | Unset):
+        scope (str | Unset):  Default: ''.
+        client_id (None | str | Unset):
+        client_secret (None | str | Unset):
     """
 
     username: str
     password: str
-    grant_type: None | Unset | str = UNSET
-    scope: Unset | str = ""
-    client_id: None | Unset | str = UNSET
-    client_secret: None | Unset | str = UNSET
+    grant_type: None | str | Unset = UNSET
+    scope: str | Unset = ""
+    client_id: None | str | Unset = UNSET
+    client_secret: None | str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -34,7 +36,7 @@ class BodyV0AuthLogin:
 
         password = self.password
 
-        grant_type: None | Unset | str
+        grant_type: None | str | Unset
         if isinstance(self.grant_type, Unset):
             grant_type = UNSET
         else:
@@ -42,13 +44,13 @@ class BodyV0AuthLogin:
 
         scope = self.scope
 
-        client_id: None | Unset | str
+        client_id: None | str | Unset
         if isinstance(self.client_id, Unset):
             client_id = UNSET
         else:
             client_id = self.client_id
 
-        client_secret: None | Unset | str
+        client_secret: None | str | Unset
         if isinstance(self.client_secret, Unset):
             client_secret = UNSET
         else:
@@ -80,32 +82,32 @@ class BodyV0AuthLogin:
 
         password = d.pop("password")
 
-        def _parse_grant_type(data: object) -> None | Unset | str:
+        def _parse_grant_type(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         grant_type = _parse_grant_type(d.pop("grant_type", UNSET))
 
         scope = d.pop("scope", UNSET)
 
-        def _parse_client_id(data: object) -> None | Unset | str:
+        def _parse_client_id(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         client_id = _parse_client_id(d.pop("client_id", UNSET))
 
-        def _parse_client_secret(data: object) -> None | Unset | str:
+        def _parse_client_secret(data: object) -> None | str | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
                 return data
-            return cast(None | Unset | str, data)
+            return cast(None | str | Unset, data)
 
         client_secret = _parse_client_secret(d.pop("client_secret", UNSET))
 
