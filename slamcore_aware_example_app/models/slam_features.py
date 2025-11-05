@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,25 +19,25 @@ class SlamFeatures:
     """SLAM features enabled for the current run.
 
     Attributes:
-        markers (Union['SlamMarkerFeatures', None]):
-        perception (Union['SlamPerceptionFeatures', None]):
+        markers (None | SlamMarkerFeatures):
+        perception (None | SlamPerceptionFeatures):
     """
 
-    markers: Union["SlamMarkerFeatures", None]
-    perception: Union["SlamPerceptionFeatures", None]
+    markers: None | SlamMarkerFeatures
+    perception: None | SlamPerceptionFeatures
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         from ..models.slam_marker_features import SlamMarkerFeatures
         from ..models.slam_perception_features import SlamPerceptionFeatures
 
-        markers: None | dict[str, Any]
+        markers: dict[str, Any] | None
         if isinstance(self.markers, SlamMarkerFeatures):
             markers = self.markers.to_dict()
         else:
             markers = self.markers
 
-        perception: None | dict[str, Any]
+        perception: dict[str, Any] | None
         if isinstance(self.perception, SlamPerceptionFeatures):
             perception = self.perception.to_dict()
         else:
@@ -59,7 +61,7 @@ class SlamFeatures:
 
         d = dict(src_dict)
 
-        def _parse_markers(data: object) -> Union["SlamMarkerFeatures", None]:
+        def _parse_markers(data: object) -> None | SlamMarkerFeatures:
             if data is None:
                 return data
             try:
@@ -68,13 +70,13 @@ class SlamFeatures:
                 markers_type_0 = SlamMarkerFeatures.from_dict(data)
 
                 return markers_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["SlamMarkerFeatures", None], data)
+            return cast(None | SlamMarkerFeatures, data)
 
         markers = _parse_markers(d.pop("markers"))
 
-        def _parse_perception(data: object) -> Union["SlamPerceptionFeatures", None]:
+        def _parse_perception(data: object) -> None | SlamPerceptionFeatures:
             if data is None:
                 return data
             try:
@@ -83,9 +85,9 @@ class SlamFeatures:
                 perception_type_0 = SlamPerceptionFeatures.from_dict(data)
 
                 return perception_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union["SlamPerceptionFeatures", None], data)
+            return cast(None | SlamPerceptionFeatures, data)
 
         perception = _parse_perception(d.pop("perception"))
 

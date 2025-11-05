@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, Any, TypeVar
@@ -34,7 +36,7 @@ class SlamSystemStatus:
     mode: RunType
     input_map: str
     output_map: str
-    features: "SlamFeatures"
+    features: SlamFeatures
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

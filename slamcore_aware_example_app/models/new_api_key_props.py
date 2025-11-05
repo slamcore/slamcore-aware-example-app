@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import datetime
 from collections.abc import Mapping
 from typing import Any, TypeVar, cast
@@ -15,18 +17,18 @@ T = TypeVar("T", bound="NewAPIKeyProps")
 class NewAPIKeyProps:
     """
     Attributes:
-        description (Union[Unset, str]):  Default: ''.
-        expires_at (Union[None, Unset, datetime.datetime]):
+        description (str | Unset):  Default: ''.
+        expires_at (datetime.datetime | None | Unset):
     """
 
-    description: Unset | str = ""
-    expires_at: None | Unset | datetime.datetime = UNSET
+    description: str | Unset = ""
+    expires_at: datetime.datetime | None | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         description = self.description
 
-        expires_at: None | Unset | str
+        expires_at: None | str | Unset
         if isinstance(self.expires_at, Unset):
             expires_at = UNSET
         elif isinstance(self.expires_at, datetime.datetime):
@@ -49,7 +51,7 @@ class NewAPIKeyProps:
         d = dict(src_dict)
         description = d.pop("description", UNSET)
 
-        def _parse_expires_at(data: object) -> None | Unset | datetime.datetime:
+        def _parse_expires_at(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -60,9 +62,9 @@ class NewAPIKeyProps:
                 expires_at_type_0 = isoparse(data)
 
                 return expires_at_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(None | Unset | datetime.datetime, data)
+            return cast(datetime.datetime | None | Unset, data)
 
         expires_at = _parse_expires_at(d.pop("expires_at", UNSET))
 

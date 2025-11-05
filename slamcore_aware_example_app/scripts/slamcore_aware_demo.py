@@ -264,15 +264,14 @@ def interact_w_websocket(client: AuthenticatedClient) -> None:
     # connect to the websocket ----------------------------------------------------------------
     aware_url = client.get_httpx_client().base_url.copy_with(scheme="ws")
     with connect(str(aware_url.join(f"v0/slam/ws/{ws_token}"))) as websocket:
+        streams = ["FullPose", "SLAMStatus", "ObjectDetections"]
         # request streaming of messages
-        print("Requesting streaming of messages: FullPose, SLAMStatus, Panoptic...")
+        print(f"Requesting streaming of messages: {', '.join(streams)} ...")
         websocket.send(
             json.dumps(
                 {
                     "start": [
-                        "FullPose",
-                        "SLAMStatus",
-                        "Panoptic",
+                        *streams,
                     ],
                 },
             ),

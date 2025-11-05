@@ -26,10 +26,12 @@ def _parse_response(
         response_200 = Token.from_dict(response.json())
 
         return response_200
+
     if response.status_code == 401:
         response_401 = HTTPExceptionModel.from_dict(response.json())
 
         return response_401
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -61,8 +63,12 @@ def sync_detailed(
     `/login/api_key` endpoint. Then use the said access token to request a websocket token from
     this endpoint.
 
-    Finally, when opening a new websocket connection, provide the websocket token in the
-    Authorization header, e.g., `Authorization: Bearer <websocket_token>`.
+    Finally, when opening a new websocket connection, append the websocket token
+    to the URL as follows:
+
+    ```
+    websocat ws://$AWARE_DEVICE_HOST/v0/slam/ws/$WS_TOKEN
+    ```
 
     Returns:
         The websocket token
@@ -72,7 +78,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[HTTPExceptionModel, Token]]
+        Response[HTTPExceptionModel | Token]
     """
 
     kwargs = _get_kwargs()
@@ -98,8 +104,12 @@ def sync(
     `/login/api_key` endpoint. Then use the said access token to request a websocket token from
     this endpoint.
 
-    Finally, when opening a new websocket connection, provide the websocket token in the
-    Authorization header, e.g., `Authorization: Bearer <websocket_token>`.
+    Finally, when opening a new websocket connection, append the websocket token
+    to the URL as follows:
+
+    ```
+    websocat ws://$AWARE_DEVICE_HOST/v0/slam/ws/$WS_TOKEN
+    ```
 
     Returns:
         The websocket token
@@ -109,7 +119,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[HTTPExceptionModel, Token]
+        HTTPExceptionModel | Token
     """
 
     return sync_detailed(
@@ -131,8 +141,12 @@ async def asyncio_detailed(
     `/login/api_key` endpoint. Then use the said access token to request a websocket token from
     this endpoint.
 
-    Finally, when opening a new websocket connection, provide the websocket token in the
-    Authorization header, e.g., `Authorization: Bearer <websocket_token>`.
+    Finally, when opening a new websocket connection, append the websocket token
+    to the URL as follows:
+
+    ```
+    websocat ws://$AWARE_DEVICE_HOST/v0/slam/ws/$WS_TOKEN
+    ```
 
     Returns:
         The websocket token
@@ -142,7 +156,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[HTTPExceptionModel, Token]]
+        Response[HTTPExceptionModel | Token]
     """
 
     kwargs = _get_kwargs()
@@ -166,8 +180,12 @@ async def asyncio(
     `/login/api_key` endpoint. Then use the said access token to request a websocket token from
     this endpoint.
 
-    Finally, when opening a new websocket connection, provide the websocket token in the
-    Authorization header, e.g., `Authorization: Bearer <websocket_token>`.
+    Finally, when opening a new websocket connection, append the websocket token
+    to the URL as follows:
+
+    ```
+    websocat ws://$AWARE_DEVICE_HOST/v0/slam/ws/$WS_TOKEN
+    ```
 
     Returns:
         The websocket token
@@ -177,7 +195,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[HTTPExceptionModel, Token]
+        HTTPExceptionModel | Token
     """
 
     return (
